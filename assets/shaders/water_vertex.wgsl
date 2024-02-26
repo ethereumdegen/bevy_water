@@ -3,7 +3,7 @@
 	skinning,
 	view_transformations::position_world_to_clip,
 }
-#import bevy_render::instance_index::get_instance_index
+ 
 
 #import bevy_water::water_functions as water_fn
 
@@ -29,7 +29,7 @@ fn vertex(vertex: Vertex) -> VertexOutput {
 #else
   out.world_normal = mesh_functions::mesh_normal_local_to_world(
 		vertex.normal,
-		get_instance_index(vertex.instance_index)
+	  vertex.instance_index
 	);
 #endif
 #endif
@@ -51,7 +51,7 @@ fn vertex(vertex: Vertex) -> VertexOutput {
   out.world_tangent = mesh_functions::mesh_tangent_local_to_world(
 		model,
 		vertex.tangent,
-		get_instance_index(vertex.instance_index)
+		 vertex.instance_index
 	);
 #endif
 
@@ -60,7 +60,7 @@ fn vertex(vertex: Vertex) -> VertexOutput {
 #endif
 
 #ifdef VERTEX_OUTPUT_INSTANCE_INDEX
-	out.instance_index = get_instance_index(vertex.instance_index);
+	out.instance_index = vertex.instance_index;
 #endif
 
   return out;

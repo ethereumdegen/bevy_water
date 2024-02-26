@@ -100,8 +100,8 @@ fn main() {
   app.run();
 }
 
-fn handle_quit(input: Res<Input<KeyCode>>, mut exit: EventWriter<AppExit>) {
-  if input.pressed(KeyCode::Q) {
+fn handle_quit(input: Res<ButtonInput<KeyCode>>, mut exit: EventWriter<AppExit>) {
+  if input.pressed(KeyCode::KeyQ) {
     exit.send(AppExit);
   }
 }
@@ -112,12 +112,12 @@ struct UiState {
 }
 
 fn toggle_wireframe(
-  input: Res<Input<KeyCode>>,
+  input: Res<ButtonInput<KeyCode>>,
   query: Query<Entity, With<Handle<Mesh>>>,
   mut commands: Commands,
   mut state: ResMut<UiState>,
 ) {
-  if input.just_pressed(KeyCode::R) {
+  if input.just_pressed(KeyCode::KeyR) {
     // Update flag.
     let show_wireframe = !state.show_wireframe;
     state.show_wireframe = show_wireframe;
@@ -452,7 +452,7 @@ fn setup(
 
   #[cfg(not(feature = "atmosphere"))]
   {
-    cam.insert(Skybox(skybox_handle));
+    cam.insert(Skybox{image: skybox_handle , brightness: 1.0 });
   }
 
   #[cfg(feature = "depth_prepass")]
